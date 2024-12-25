@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .class1 {
+            background-color: #f9c2c2; 
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .class2 {
+            background-color: #c2e0f9; 
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        aside {
+            margin-top: 20px;
+            width: 20%;
+        }
+
+        .russianPhrasesList {
+            list-style-type: disc;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <button id="showPhrase">Показать фразу</button>
+        <button id="boldText">Перекрасить</button>
+    </div>
+
+    <aside>
+        <h3>Список фраз:</h3>
+        <ol id="phraseList"></ol>
+    </aside>
+
+    <script>
+        const latinPhrases = [
+            "Consuetudo est altera natura",
+            "Nota bene",
+            "Nulla calamitas sola",
+            "Per aspera ad astra",
+            "Veni, vidi, vici", 
+            "Carpe diem" 
+        ];
+
+        const russianPhrases = [
+            "Привычка - вторая натура",
+            "Заметьте хорошо!",
+            "Беда не приходит одна",
+            "Через тернии к звёздам",
+            "Пришел, увидел, победил",
+            "Лови момент"
+        ];
+
+        let usedPhrases = [];
+        let clickCount = 1;
+
+        document.getElementById('showPhrase').addEventListener('click', () => {
+            if (usedPhrases.length === latinPhrases.length) {
+                alert("Фразы закончились");
+                return;
+            }
+
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * latinPhrases.length);
+            } while (usedPhrases.includes(randomIndex));
+
+            usedPhrases.push(randomIndex);
+            const latinPhrase = latinPhrases[randomIndex];
+            const russianPhrase = russianPhrases[randomIndex];
+
+            const list = document.getElementById('phraseList');
+            const listItem = document.createElement('li');
+            listItem.className = (clickCount % 2 === 0) ? 'class1' : 'class2';
+            listItem.innerHTML = `${latinPhrase} <ul><li class="russianPhrasesList" >${russianPhrase}</li></ul>`;
+            list.appendChild(listItem);
+
+            clickCount++;
+        });
+
+        document.getElementById('boldText').addEventListener('click', () => {
+            const class1Elements = document.querySelectorAll('.class1');
+            class1Elements.forEach(element => {
+                element.style.fontWeight = 'bold';
+            });
+        });
+    </script>
+</body>
+</html>
